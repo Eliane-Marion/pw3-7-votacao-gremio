@@ -1,4 +1,28 @@
 <main>
-  <h1>Votação do grêmio</h1>
-  <p>Projeto de votação da turma</p>
+  <h1>Votacao do gremio</h1>
+  <p>Projeto de votacao da turma</p>
+
+  <p class="sucesso" *ngIf="mensagem">{{ mensagem }}</p>
+  <p class="erro" *ngIf="erro">{{ erro }}</p>
+
+  <table>
+    <thead>
+      <tr><th>Nome</th><th>Categoria</th><th>Votos</th><th>Situacao</th><th>Acoes</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let candidato of candidatos">
+        <td>{{ candidato.nome }}</td>
+        <td>{{ candidato.categoria }}</td>
+        <td>{{ candidato.quantidadeVotos }}</td>
+        <td>{{ candidato.eleito ? 'Eleito' : 'Nao eleito' }}</td>
+        <td>
+          <button type="button" (click)="votar(candidato.id)">Votar</button>
+          <button type="button" class="excluir" (click)="excluir(candidato.id)">Excluir</button>
+        </td>
+      </tr>
+      <tr *ngIf="candidatos.length === 0">
+        <td colspan="5">Nenhum candidato cadastrado.</td>
+      </tr>
+    </tbody>
+  </table>
 </main>
