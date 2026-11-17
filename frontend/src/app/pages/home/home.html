@@ -2,9 +2,28 @@
   <h1>Votacao do gremio</h1>
   <p>Projeto de votacao da turma</p>
 
+  <section class="formulario">
+    <h2>{{ editandoId === null ? 'Cadastrar candidato' : 'Editar candidato' }}</h2>
+    <form [formGroup]="formulario" (ngSubmit)="salvar()">
+      <label for="nome">Nome</label>
+      <input id="nome" type="text" formControlName="nome" />
+      <small *ngIf="formulario.controls.nome.touched && formulario.controls.nome.invalid">Informe um nome com pelo menos 2 caracteres.</small>
+
+      <label for="categoria">Categoria</label>
+      <input id="categoria" type="text" formControlName="categoria" />
+      <small *ngIf="formulario.controls.categoria.touched && formulario.controls.categoria.invalid">Informe uma categoria com pelo menos 2 caracteres.</small>
+
+      <div class="botoes">
+        <button type="submit" [disabled]="enviando">{{ editandoId === null ? 'Cadastrar' : 'Salvar edicao' }}</button>
+        <button *ngIf="editandoId !== null" type="button" class="secundario" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+  </section>
+
   <p class="sucesso" *ngIf="mensagem">{{ mensagem }}</p>
   <p class="erro" *ngIf="erro">{{ erro }}</p>
 
+  <h2>Candidatos</h2>
   <table>
     <thead>
       <tr><th>Nome</th><th>Categoria</th><th>Votos</th><th>Situacao</th><th>Acoes</th></tr>
@@ -17,12 +36,11 @@
         <td>{{ candidato.eleito ? 'Eleito' : 'Nao eleito' }}</td>
         <td>
           <button type="button" (click)="votar(candidato.id)">Votar</button>
+          <button type="button" class="secundario" (click)="editar(candidato)">Editar</button>
           <button type="button" class="excluir" (click)="excluir(candidato.id)">Excluir</button>
         </td>
       </tr>
-      <tr *ngIf="candidatos.length === 0">
-        <td colspan="5">Nenhum candidato cadastrado.</td>
-      </tr>
+      <tr *ngIf="candidatos.length === 0"><td colspan="5">Nenhum candidato cadastrado.</td></tr>
     </tbody>
   </table>
 </main>
