@@ -96,7 +96,7 @@ public class CandidatoService {
 
         for (int i = 0; i < candidatos.size(); i++) {
             Candidato candidato = candidatos.get(i);
-            candidato.setEleito(i == 0 && candidato.getQuantidadeVotos() > 0);
+            candidato.setEleito(candidato.getQuantidadeVotos() > 0 && candidato.getQuantidadeVotos().equals(candidatos.get(0).getQuantidadeVotos()));
         }
         repository.saveAll(candidatos);
     }
